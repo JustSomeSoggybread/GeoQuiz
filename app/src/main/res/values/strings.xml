@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="question_one">Question 1: Answer True</string>
+    <string name="question_two">Question 2: Answer False</string>
+    <string name="question_three">Question 3: Answer True</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+</resources>
