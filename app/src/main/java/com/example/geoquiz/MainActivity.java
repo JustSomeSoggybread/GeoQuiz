@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             score++;
             Log.d(TAG, "score: " + score);
         } else{
-                if (userPressedTrue == true){
+                if (userPressedTrue){
                     mTrueButton.setEnabled(false);
 
                 }
