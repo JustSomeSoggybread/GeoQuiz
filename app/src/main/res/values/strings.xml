@@ -9,4 +9,8 @@
     <string name="previous_button">Previous</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
+    <string name="cheat_button">Cheat</string>
+    <string name="warning_text">Warning</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="judgement_toast">Thou has committed the ultimate sin</string>
 </resources>
