@@ -17,7 +17,9 @@ public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA_ANSWER_IS_TRUE = ".answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN = ".answer_shown";
+    private static final String IS_CHEATER = "is_cheater";
     private boolean mAnswerIsTrue;
+    private boolean mQuestionAnswered;
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
 
@@ -53,9 +55,19 @@ public class CheatActivity extends AppCompatActivity {
                 setAnswerShownResult(true);
             }
         });
-    }
 
+        if (savedInstanceState != null){
+            mQuestionAnswered = savedInstanceState.getBoolean(IS_CHEATER);
+            setAnswerShownResult(mQuestionAnswered);
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(IS_CHEATER, mQuestionAnswered);
+    }
     private void setAnswerShownResult(boolean isAnswerShown){
+        mQuestionAnswered = isAnswerShown;
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
         setResult(RESULT_OK, data);

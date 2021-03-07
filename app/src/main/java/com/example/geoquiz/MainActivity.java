@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "";
     private static final int REQUEST_CODE_CHEAT = 0;
+    private static final String IS_CHEATER = "choot";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private int score = 0;
     private int mCurrentIndex= 0;
     private boolean mIsCheater;
+    private String SAVE_ARRAY = "array";
 
 
 
@@ -39,12 +41,19 @@ public class MainActivity extends AppCompatActivity {
             new Question(R.string.question_three, true),
     };
 
+    private boolean[] mCheatBank = new boolean[mQuestionBank.length];
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
         setContentView(R.layout.activity_main);
+
+        for (int i = 0; i < mCheatBank.length; i++){
+            mCheatBank[i] = false;
+        }
 
         if(savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
@@ -74,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         mCheatButton= (Button) findViewById((R.id.cheat_button));
         mCheatButton.setOnClickListener(new View.OnClickListener(){
             @Override
-                    public void onClick(View v){
-                        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
-                        Intent intent = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
-                        startActivityForResult(intent, REQUEST_CODE_CHEAT);
+            public void onClick(View v){
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                Intent intent = CheatActivity.newIntent(MainActivity.this, answerIsTrue);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
             }
         });
 
@@ -128,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
             }
             mIsCheater = CheatActivity.wasAnswerShown(data);
         }
+
+        if (mIsCheater){
+            mCheatBank[mCurrentIndex] = true;
+        }
     }
 
     @Override
@@ -154,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSAVEInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(IS_CHEATER, mIsCheater);
+        savedInstanceState.putBooleanArray(SAVE_ARRAY, mCheatBank);
     }
 
     @Override
@@ -186,10 +201,17 @@ public class MainActivity extends AppCompatActivity {
             mPreviousButton.setEnabled(false);
             mFalseButton.setEnabled(false);
             mTrueButton.setEnabled(false);
+
             if (mIsCheater){messageResId = R.string.judgement_toast;}
+
+            else if(mCheatBank[mCurrentIndex] == true){
+                messageResId = R.string.judgement_toast;
+            }
+
             else{
                 score++;
                 Log.d(TAG, "score: " + score);}
+
         }
         else{
             if (userPressedTrue) {
