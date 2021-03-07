@@ -122,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater = savedInstanceState.getBoolean(IS_CHEATER, false);
+            mCheatBank = savedInstanceState.getBooleanArray(SAVE_ARRAY);
+        }
         updateQuestion();
     }
 
